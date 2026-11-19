@@ -21,3 +21,25 @@ export const getLoanById = (req: Request, res: Response) => {
 
   return res.status(200).json(loan);
 };
+
+export const createLoan = (req: Request, res: Response): void => {
+    const { applicant, amount, status } = req.body;
+
+    if (!applicant || typeof amount !== "number" || !status) {
+        res.status(400).json({
+            message: "Applicant, amount, and status are required"
+        });
+        return
+    }
+    const newLoan = {
+        id: Math.max(0, ...loans.map((loan) => loan.id)) + 1,
+        applicant,
+        amount,
+        status,
+        createdAt: new Date().toISOString()
+    };
+
+    loans.push(newLoan);
+
+    res.status(201).json(newLoan);
+}
