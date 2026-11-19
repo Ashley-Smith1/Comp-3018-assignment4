@@ -1,5 +1,6 @@
 import express from "express";
 import morgan from "morgan";
+import loanRoutes from "./api/v1/routes/loan.routes";
 
 const app = express();
 
@@ -14,5 +15,8 @@ app.get("/health", (req, res) => {
     message: "High-Risk Loan Monitoring API is running"
   });
 });
+
+// Loan application routes
+app.use("/api/v1/loans", loanRoutes);
 
 export default app;
